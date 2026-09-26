@@ -1,0 +1,16 @@
+# Local logs and generated output
+*.log
+*.tmp
+*.pid
+*.lock
+
+# Credentials and local configuration
+.env
+.env.*
+*.secret
+*.key
+
+# PowerShell transcripts and generated archives
+Transcript*.txt
+*.zip
+*.7z
