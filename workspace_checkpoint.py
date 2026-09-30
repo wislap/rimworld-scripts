@@ -21,6 +21,7 @@ REPOS = {
     "archive": "rimworld-bench-archive",
 }
 CACHES = {"__pycache__", ".pytest_cache", ".ruff_cache", ".mypy_cache", "venv", ".venv"}
+PYTEST_SCRATCH = re.compile(r"judge-.+(?:tests-temp-v\d+|test(?:-high)?(?:-\d{8})?-(?:\d+|final))")
 SECRET = re.compile(rb"(?:(?<![A-Za-z0-9_-])sk-[A-Za-z0-9_-]{24,}|(?i:authorization)[\s\"':=]+(?i:bearer)[ ]+[A-Za-z0-9._-]{20,})")
 
 
@@ -42,7 +43,9 @@ def stream_digest(stream):
 
 def secret_check(path):
     # Gzip traces also need a decoded scan. Never print matching content.
-    opener = gzip.open if path.suffix == ".gz" else open
+    with path.open("rb") as probe:
+        is_gzip = probe.read(2) == b"\x1f\x8b"
+    opener = gzip.open if is_gzip else open
     tail = b""
     with opener(path, "rb") as stream:
         while chunk := stream.read(1024 * 1024):
@@ -84,7 +87,8 @@ def inventory(root):
             kept = []
             for name in dirs:
                 path = Path(base) / name
-                if name in CACHES or path.is_symlink():
+                scratch = Path(base) == root / ".bench-results" and PYTEST_SCRATCH.fullmatch(name)
+                if name in CACHES or scratch or path.is_symlink():
                     omitted.append({"path": path.relative_to(root).as_posix(), "reason": "rebuildable cache/runtime or symlink"})
                 else:
                     kept.append(name)
@@ -148,7 +152,7 @@ def seal(root, out):
         "format": "rimworld-workspace-recovery-v1", "original_workspace": str(root),
         "offline_only": True, "workspace_files": entries,
         "capsule_files": {p.relative_to(out).as_posix(): digest(p) for p in outputs},
-        "scope": "Five companion repositories, all local experiment records, current saves and local Mod assemblies; excludes caches, Python environments and private key/config filenames. No installed game or parent N.E.K.O host backup.",
+        "scope": "Five companion repositories, all local experiment records, current saves and local Mod assemblies; excludes caches, explicit pytest scratch directories, Python environments and private key/config filenames. No installed game or parent N.E.K.O host backup.",
         "limits": "Same-disk capsule is not protection against disk failure. Git bundles contain locally available history, not missing shallow ancestors. Filename/pattern scanning is not a comprehensive secret audit of historical Git objects. Original evidence paths are retained, not rewritten.",
     })
     result = verify(out)

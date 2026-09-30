@@ -17,6 +17,8 @@ class RecoveryTests(unittest.TestCase):
             path = Path(temp) / "trace.json.gz"
             path.write_bytes(gzip.compress(b'task-' + b'x' * 32))
             checkpoint.secret_check(path)
+            path.write_bytes(b"intentionally-invalid-gzip-test-fixture")
+            checkpoint.secret_check(path)
             path.write_bytes(gzip.compress(b'"sk-' + b'x' * 32 + b'"'))
             with self.assertRaisesRegex(ValueError, "Credential-shaped"):
                 checkpoint.secret_check(path)
@@ -42,11 +44,14 @@ class RecoveryTests(unittest.TestCase):
                 path = root / ".bench-results" / name
                 path.parent.mkdir(parents=True, exist_ok=True)
                 path.write_text("fixture", encoding="utf-8")
+            scratch = root / ".bench-results/judge-pilot-test-20260930-1/fixture.txt"
+            scratch.parent.mkdir(parents=True)
+            scratch.write_text("rebuildable fixture", encoding="utf-8")
             with patch.object(checkpoint, "REPOS", {}):
                 files, _, omitted = checkpoint.inventory(root)
             self.assertEqual({p.relative_to(root).as_posix() for p in files}, {
                 ".bench-results/study/bin/FrozenWorld.dll", ".bench-results/study/runs/failed.json"})
-            self.assertEqual(len(omitted), 2)
+            self.assertEqual(len(omitted), 3)
 
     def test_seal_refuses_existing_output(self):
         with tempfile.TemporaryDirectory() as temp:
