@@ -100,8 +100,9 @@ def inventory(root):
                 else:
                     files.add(path)
     selected = []
-    if (root / "WORKSPACE.md").is_file():
-        files.add(root / "WORKSPACE.md")
+    for name in ("WORKSPACE.md", "AGENTS.md"):
+        if (root / name).is_file():
+            files.add(root / name)
     for path in sorted(files):
         relative = path.relative_to(root).as_posix()
         if secret_name(path):
