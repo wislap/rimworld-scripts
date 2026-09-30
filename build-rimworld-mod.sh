@@ -3,8 +3,8 @@ set -euo pipefail
 
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 workspace_root="$(cd "$script_dir/.." && pwd)"
-project="$workspace_root/RimWorldMod/NekoRimWorld/Source/NekoRimWorld.csproj"
-assembly="$workspace_root/RimWorldMod/NekoRimWorld/1.6/Assemblies/NekoRimWorld.dll"
+project="$workspace_root/NekoRimWorld/Source/NekoRimWorld.csproj"
+assembly="$workspace_root/NekoRimWorld/1.6/Assemblies/NekoRimWorld.dll"
 configuration="${1:-Debug}"
 
 if [[ "$configuration" != "Debug" && "$configuration" != "Release" ]]; then

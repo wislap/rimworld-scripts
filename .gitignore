@@ -14,3 +14,8 @@
 Transcript*.txt
 *.zip
 *.7z
+
+# Python maintenance tools
+__pycache__/
+*.py[cod]
+.pytest_cache/

@@ -3,7 +3,7 @@ set -euo pipefail
 
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 workspace_root="$(cd "$script_dir/.." && pwd)"
-project="$workspace_root/RimWorldMod/NekoRimWorld/Tests/BridgeSmoke/BridgeSmoke.csproj"
+project="$workspace_root/NekoRimWorld/Tests/BridgeSmoke/BridgeSmoke.csproj"
 configuration="${1:-Release}"
 framework="net8.0"
 

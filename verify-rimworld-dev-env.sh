@@ -4,7 +4,7 @@ set -euo pipefail
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 workspace_root="$(cd "$script_dir/.." && pwd)"
 game_root="${RIMWORLD_GAME_ROOT:-/mnt/f_disk/SteamLibrary/steamapps/common/RimWorld}"
-mod_root="$workspace_root/RimWorldMod/NekoRimWorld"
+mod_root="$workspace_root/NekoRimWorld"
 mods_config="$workspace_root/.rimworld-dev-data/Config/ModsConfig.xml"
 link_path="$game_root/Mods/NekoRimWorldDev"
 harmony_root="${RIMWORLD_HARMONY_ROOT:-/mnt/f_disk/SteamLibrary/steamapps/workshop/content/294100/2009463077}"

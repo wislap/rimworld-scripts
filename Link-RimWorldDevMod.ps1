@@ -6,7 +6,7 @@ param(
 $ErrorActionPreference = "Stop"
 $EnvironmentRoot = Split-Path -Parent $PSScriptRoot
 $SourceRoot = [System.IO.Path]::GetFullPath(
-    (Join-Path $EnvironmentRoot "RimWorldMod\NekoRimWorld")
+    (Join-Path $EnvironmentRoot "NekoRimWorld")
 )
 $ModsRoot = Join-Path $GameRoot "Mods"
 $LinkPath = Join-Path $ModsRoot "NekoRimWorldDev"

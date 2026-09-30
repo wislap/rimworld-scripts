@@ -7,7 +7,7 @@ param(
 
 $ErrorActionPreference = "Stop"
 $EnvironmentRoot = Split-Path -Parent $PSScriptRoot
-$ModRoot = Join-Path $EnvironmentRoot "RimWorldMod\NekoRimWorld"
+$ModRoot = Join-Path $EnvironmentRoot "NekoRimWorld"
 $ProjectPath = Join-Path $ModRoot "Source\NekoRimWorld.csproj"
 $AssemblyPath = Join-Path $ModRoot "1.6\Assemblies\NekoRimWorld.dll"
 $DevConfig = Join-Path $EnvironmentRoot ".rimworld-dev-data\Config\ModsConfig.xml"

@@ -6,7 +6,7 @@ param(
 
 $ErrorActionPreference = "Stop"
 $EnvironmentRoot = Split-Path -Parent $PSScriptRoot
-$SmokeProject = Join-Path $EnvironmentRoot "RimWorldMod\NekoRimWorld\Tests\BridgeSmoke\BridgeSmoke.csproj"
+$SmokeProject = Join-Path $EnvironmentRoot "NekoRimWorld\Tests\BridgeSmoke\BridgeSmoke.csproj"
 
 if (-not (Get-Command dotnet -ErrorAction SilentlyContinue)) {
     throw "dotnet is not available on PATH"
@@ -20,7 +20,7 @@ if ($LASTEXITCODE -ne 0) {
     throw "Bridge smoke restore failed with exit code $LASTEXITCODE"
 }
 
-& dotnet run --project $SmokeProject --configuration $Configuration --no-restore --nologo
+& dotnet run --project $SmokeProject --framework net8.0 --configuration $Configuration --no-restore --nologo
 if ($LASTEXITCODE -ne 0) {
     throw "Bridge smoke tests failed with exit code $LASTEXITCODE"
 }

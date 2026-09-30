@@ -4,7 +4,7 @@ set -euo pipefail
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 workspace_root="$(cd "$script_dir/.." && pwd)"
 game_root="${RIMWORLD_GAME_ROOT:-/mnt/f_disk/SteamLibrary/steamapps/common/RimWorld}"
-source_root="$workspace_root/RimWorldMod/NekoRimWorld"
+source_root="$workspace_root/NekoRimWorld"
 link_path="$game_root/Mods/NekoRimWorldDev"
 
 [[ -d "$source_root" ]] || { echo "development mod source is missing: $source_root" >&2; exit 1; }

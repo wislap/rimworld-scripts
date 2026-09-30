@@ -6,8 +6,8 @@ param(
 
 $ErrorActionPreference = "Stop"
 $EnvironmentRoot = Split-Path -Parent $PSScriptRoot
-$ProjectPath = Join-Path $EnvironmentRoot "RimWorldMod\NekoRimWorld\Source\NekoRimWorld.csproj"
-$AssemblyPath = Join-Path $EnvironmentRoot "RimWorldMod\NekoRimWorld\1.6\Assemblies\NekoRimWorld.dll"
+$ProjectPath = Join-Path $EnvironmentRoot "NekoRimWorld\Source\NekoRimWorld.csproj"
+$AssemblyPath = Join-Path $EnvironmentRoot "NekoRimWorld\1.6\Assemblies\NekoRimWorld.dll"
 
 if (-not (Get-Command dotnet -ErrorAction SilentlyContinue)) {
     throw "dotnet is not available on PATH"
